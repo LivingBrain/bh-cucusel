@@ -57,8 +57,9 @@ public class CucuselConfig {
         return getValueByKeyFromSystemPropertyOrProperties(RETRY_COUNT);
     }
 
-    public static String getThreadCount() {
-        return getValueByKeyFromSystemPropertyOrProperties(THREAD_COUNT);
+    public static int getThreadCount() {
+        String threads = getValueByKeyFromSystemPropertyOrProperties(THREAD_COUNT);
+        return Integer.parseInt(threads == null ? "1" : threads);
     }
 
     private static String getValueByKeyFromSystemPropertyOrProperties(String key) {
