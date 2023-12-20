@@ -16,6 +16,7 @@ public class CucuselConfig {
     private static final String GRID_URL = "grid.url";
     private static final String RETRY_COUNT = "retry.count";
     private static final String THREAD_COUNT = "thread.count";
+    private static final String ENABLE_TRACING = "enable.tracing";
     private static Properties propertiesInstance = null;
 
     private static final Logger logger = LogManager.getLogger();
@@ -60,6 +61,10 @@ public class CucuselConfig {
     public static int getThreadCount() {
         String threads = getValueByKeyFromSystemPropertyOrProperties(THREAD_COUNT);
         return Integer.parseInt(threads == null ? "1" : threads);
+    }
+
+    public static boolean isEnableTracing() {
+        return Boolean.parseBoolean(getValueByKeyFromSystemPropertyOrProperties(ENABLE_TRACING));
     }
 
     private static String getValueByKeyFromSystemPropertyOrProperties(String key) {

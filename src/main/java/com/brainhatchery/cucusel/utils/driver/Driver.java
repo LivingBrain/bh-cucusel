@@ -11,9 +11,8 @@ public class Driver {
 
     public static void setInstance(String gridUrl,
                                    BrowserTypes browserType,
-                                   String[] driverArguments,
-                                   Consumer<AbstractDriverOptions<?>> driverCapabilitiesConsumer) {
-        webDriverInstance.set(DriverFactory.createDriver(gridUrl, browserType, driverArguments, driverCapabilitiesConsumer));
+                                   String[] driverArguments) {
+        webDriverInstance.set(DriverFactory.createDriver(gridUrl, browserType, driverArguments));
     }
 
     public static WebDriver getInstance() {

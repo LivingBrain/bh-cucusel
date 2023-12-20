@@ -1,5 +1,6 @@
 package com.brainhatchery.cucusel.utils.driver;
 
+import com.brainhatchery.cucusel.utils.configuration.CucuselConfig;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.NotImplementedException;
@@ -12,11 +13,9 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.remote.AbstractDriverOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.URL;
-import java.util.function.Consumer;
 
 public class DriverFactory {
 
@@ -25,46 +24,41 @@ public class DriverFactory {
     @SneakyThrows
     public static WebDriver createDriver(String gridUrl,
                                          BrowserTypes browserType,
-                                         String[] driverArguments,
-                                         Consumer<AbstractDriverOptions<?>> driverCapabilitiesConsumer) {
+                                         String[] driverArguments) {
         boolean isRemote = gridUrl != null;
-        AbstractDriverOptions<?> driverOptions;
 //        System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
 
         switch (browserType) {
             case CHROME:
-                ChromeOptions chromeOptions = new ChromeOptions();
-                driverOptions = chromeOptions.addArguments(driverArguments);
-                driverCapabilitiesConsumer.accept(chromeOptions);
+                ChromeOptions chromeOptions = (ChromeOptions) BrowserOptionsContext.getInstance();
+                chromeOptions.addArguments(driverArguments);
                 if (isRemote) {
-                    return new RemoteWebDriver(new URL(gridUrl), driverOptions, false); //TODO get tracing status from configuration
+                    return new RemoteWebDriver(new URL(gridUrl), chromeOptions, CucuselConfig.isEnableTracing());
                 } else {
                     WebDriverManager.chromedriver().setup();
                     return new ChromeDriver(chromeOptions);
                 }
             case FIRE_FOX:
-                FirefoxOptions firefoxOptions = new FirefoxOptions();
-                driverOptions = firefoxOptions.addArguments(driverArguments);
-                driverCapabilitiesConsumer.accept(firefoxOptions);
+                FirefoxOptions firefoxOptions = (FirefoxOptions) BrowserOptionsContext.getInstance();
+                firefoxOptions.addArguments(driverArguments);
                 if (isRemote) {
-                    return new RemoteWebDriver(new URL(gridUrl), driverOptions, false); //TODO get tracing status from configuration
+                    return new RemoteWebDriver(new URL(gridUrl), firefoxOptions, CucuselConfig.isEnableTracing());
                 } else {
                     WebDriverManager.firefoxdriver().setup();
                     return new FirefoxDriver(firefoxOptions);
                 }
             case EDGE:
-                EdgeOptions edgeOptions = new EdgeOptions();
-                driverOptions = edgeOptions.addArguments(driverArguments);
-                driverCapabilitiesConsumer.accept(edgeOptions);
+                EdgeOptions edgeOptions = (EdgeOptions) BrowserOptionsContext.getInstance();
+                edgeOptions.addArguments(driverArguments);
                 if (isRemote) {
-                    return new RemoteWebDriver(new URL(gridUrl), driverOptions, false); //TODO get tracing status from configuration
+                    return new RemoteWebDriver(new URL(gridUrl), edgeOptions, CucuselConfig.isEnableTracing());
                 } else {
                     WebDriverManager.edgedriver().setup();
                     return new EdgeDriver(edgeOptions);
                 }
-            default: throw new NotImplementedException(String.format("No matching browser found for provided: %s", browserType.name()));
+            default:
+                throw new NotImplementedException("No matching browser found, provided: " + browserType.name());
         }
-
     }
 
 
