@@ -20,9 +20,7 @@ public class CucuselConfig {
     private static final String EXPLICIT_TIMEOUT = "explicit.timeout";
     private static final String POLLING = "polling";
     private static Properties propertiesInstance = null;
-
     private static final Logger logger = LogManager.getLogger();
-
 
     @SneakyThrows
     public static void setInstance(String environment) {
