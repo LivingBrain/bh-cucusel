@@ -37,7 +37,7 @@ public class DriverFactory {
                     WebDriverManager.chromedriver().setup();
                     return new ChromeDriver(chromeOptions);
                 }
-            case FIRE_FOX:
+            case FIREFOX:
                 FirefoxOptions firefoxOptions = (FirefoxOptions) BrowserOptionsContext.getInstance();
                 firefoxOptions.addArguments(driverArguments);
                 if (isRemote) {

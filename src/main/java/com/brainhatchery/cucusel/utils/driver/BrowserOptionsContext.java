@@ -14,7 +14,7 @@ public class BrowserOptionsContext {
             case CHROME:
                 driverOptionsInstance.set(new ChromeOptions());
                 break;
-            case FIRE_FOX:
+            case FIREFOX:
                 driverOptionsInstance.set(new FirefoxOptions());
                 break;
             case EDGE:
