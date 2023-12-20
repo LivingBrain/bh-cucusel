@@ -16,8 +16,8 @@
         <lombok.version>1.18.30</lombok.version>
         <selenium.version>4.16.1</selenium.version>
         <testng.version>7.8.0</testng.version>
-        <allure-cucumber7.version>2.25.0</allure-cucumber7.version>
-        <cucumber.version>7.15.0</cucumber.version>
+        <allure-cucumber6.version>2.21.0</allure-cucumber6.version>
+        <cucumber.version>6.11.0</cucumber.version>
         <webdrivermanager.version>5.6.2</webdrivermanager.version>
         <log4j.version>2.22.0</log4j.version>
         <assertj-core.version>3.24.2</assertj-core.version>
@@ -53,15 +53,14 @@
 
         <dependency>
             <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-cucumber7-jvm</artifactId>
-            <version>${allure-cucumber7.version}</version>
+            <artifactId>allure-cucumber6-jvm</artifactId>
+            <version>${allure-cucumber6.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -92,7 +91,6 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-picocontainer</artifactId>
             <version>${cucumber.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>

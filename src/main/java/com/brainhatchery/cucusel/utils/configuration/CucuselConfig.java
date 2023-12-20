@@ -44,12 +44,17 @@ public class CucuselConfig {
         }
     }
 
+    public static String getProperty(String property) {
+        return getInstance().getProperty(property);
+    }
+
     public static BrowserTypes getBrowserType() {
-        return BrowserTypes.valueOf(getValueByKeyFromSystemPropertyOrProperties(BROWSER_TYPE));
+        return BrowserTypes.valueOf(getValueByKeyFromSystemPropertyOrProperties(BROWSER_TYPE).toUpperCase());
     }
 
     public static String[] getBrowserArguments() {
-        return getValueByKeyFromSystemPropertyOrProperties(BROWSER_ARGUMENTS).split(BROWSER_ARGUMENTS_SLIT_CHAR);
+        String browserArguments = getValueByKeyFromSystemPropertyOrProperties(BROWSER_ARGUMENTS);
+        return browserArguments == null ? new String[]{} : browserArguments.split(BROWSER_ARGUMENTS_SLIT_CHAR);
     }
 
     public static String getGridUrl() {
