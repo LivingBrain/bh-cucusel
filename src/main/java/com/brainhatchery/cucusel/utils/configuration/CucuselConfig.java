@@ -61,8 +61,9 @@ public class CucuselConfig {
         return getValueByKeyFromSystemPropertyOrProperties(GRID_URL);
     }
 
-    public static String getRetryCount() {
-        return getValueByKeyFromSystemPropertyOrProperties(RETRY_COUNT);
+    public static int getRetryCount() {
+        String retryCount = getValueByKeyFromSystemPropertyOrProperties(RETRY_COUNT);
+        return Integer.parseInt(retryCount == null ? "0" : retryCount);
     }
 
     public static int getThreadCount() {
@@ -76,7 +77,7 @@ public class CucuselConfig {
 
     public static long getExplicitTimeout() {
         String explicitTimeout = getValueByKeyFromSystemPropertyOrProperties(EXPLICIT_TIMEOUT);
-        return Long.parseLong(explicitTimeout != null ? explicitTimeout : "30");
+        return Long.parseLong(explicitTimeout != null ? explicitTimeout : "5");
     }
 
     public static long getPolling() {

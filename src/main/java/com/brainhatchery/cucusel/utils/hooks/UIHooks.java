@@ -3,7 +3,16 @@ package com.brainhatchery.cucusel.utils.hooks;
 import com.brainhatchery.cucusel.utils.configuration.CucuselConfig;
 import com.brainhatchery.cucusel.utils.driver.BrowserOptionsContext;
 import com.brainhatchery.cucusel.utils.driver.Driver;
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
+import io.qameta.allure.Allure;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+
+import java.io.ByteArrayInputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class UIHooks {
 
@@ -18,5 +27,17 @@ public class UIHooks {
                 CucuselConfig.getGridUrl(),
                 CucuselConfig.getBrowserType(),
                 CucuselConfig.getBrowserArguments());
+    }
+
+    @After("@UI")
+    public void afterTest(Scenario scenario) {
+        String timestamp = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
+
+        if (scenario.isFailed()) {
+            String filename = String.format("%s_%s.jpg", scenario.getName(), timestamp);
+            Allure.addAttachment(filename, new ByteArrayInputStream(((TakesScreenshot) Driver.getInstance()).getScreenshotAs(OutputType.BYTES)));
+        }
+
+        Driver.clearInstance();
     }
 }
