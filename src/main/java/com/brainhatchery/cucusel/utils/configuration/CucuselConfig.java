@@ -17,6 +17,8 @@ public class CucuselConfig {
     private static final String RETRY_COUNT = "retry.count";
     private static final String THREAD_COUNT = "thread.count";
     private static final String ENABLE_TRACING = "enable.tracing";
+    private static final String EXPLICIT_TIMEOUT = "explicit.timeout";
+    private static final String POLLING = "polling";
     private static Properties propertiesInstance = null;
 
     private static final Logger logger = LogManager.getLogger();
@@ -65,6 +67,16 @@ public class CucuselConfig {
 
     public static boolean isEnableTracing() {
         return Boolean.parseBoolean(getValueByKeyFromSystemPropertyOrProperties(ENABLE_TRACING));
+    }
+
+    public static long getExplicitTimeout() {
+        String explicitTimeout = getValueByKeyFromSystemPropertyOrProperties(EXPLICIT_TIMEOUT);
+        return Long.parseLong(explicitTimeout != null ? explicitTimeout : "30");
+    }
+
+    public static long getPolling() {
+        String polling = getValueByKeyFromSystemPropertyOrProperties(POLLING);
+        return Long.parseLong(polling != null ? polling : "200");
     }
 
     private static String getValueByKeyFromSystemPropertyOrProperties(String key) {

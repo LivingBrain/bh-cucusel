@@ -18,7 +18,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.URL;
 
 public class DriverFactory {
-
     private static final Logger logger = LogManager.getLogger();
 
     @SneakyThrows
