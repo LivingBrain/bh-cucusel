@@ -1,6 +1,6 @@
-package com.brainhatchery.cucusel.utils.configuration;
+package com.brainhatchery.cucusel.configuration;
 
-import com.brainhatchery.cucusel.utils.driver.BrowserTypes;
+import com.brainhatchery.cucusel.ui.driver.BrowserTypes;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

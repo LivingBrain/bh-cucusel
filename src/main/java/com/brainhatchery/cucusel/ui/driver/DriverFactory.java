@@ -1,6 +1,6 @@
-package com.brainhatchery.cucusel.utils.driver;
+package com.brainhatchery.cucusel.ui.driver;
 
-import com.brainhatchery.cucusel.utils.configuration.CucuselConfig;
+import com.brainhatchery.cucusel.configuration.CucuselConfig;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.NotImplementedException;

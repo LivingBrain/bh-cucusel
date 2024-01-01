@@ -1,4 +1,4 @@
-package com.brainhatchery.cucusel.utils.driver;
+package com.brainhatchery.cucusel.ui.driver;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.openqa.selenium.chrome.ChromeOptions;

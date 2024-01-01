@@ -1,9 +1,6 @@
-package com.brainhatchery.cucusel.utils.driver;
+package com.brainhatchery.cucusel.ui.driver;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.AbstractDriverOptions;
-
-import java.util.function.Consumer;
 
 public class Driver {
 

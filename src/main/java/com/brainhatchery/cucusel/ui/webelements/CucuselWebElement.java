@@ -1,8 +1,8 @@
-package com.brainhatchery.cucusel.utils.webelements;
+package com.brainhatchery.cucusel.ui.webelements;
 
-import com.brainhatchery.cucusel.utils.configuration.CucuselConfig;
-import com.brainhatchery.cucusel.utils.driver.Driver;
-import com.brainhatchery.cucusel.utils.webelements.enums.Locator;
+import com.brainhatchery.cucusel.configuration.CucuselConfig;
+import com.brainhatchery.cucusel.ui.driver.Driver;
+import com.brainhatchery.cucusel.ui.webelements.enums.Locator;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;

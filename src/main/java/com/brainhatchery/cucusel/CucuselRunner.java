@@ -1,6 +1,6 @@
 package com.brainhatchery.cucusel;
 
-import com.brainhatchery.cucusel.utils.configuration.CucuselConfig;
+import com.brainhatchery.cucusel.configuration.CucuselConfig;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.testng.ITestContext;
@@ -10,7 +10,7 @@ import org.testng.annotations.DataProvider;
 import java.util.Map;
 
 @CucumberOptions(
-        glue = {"com.brainhatchery.cucusel.utils.hooks"},
+        glue = {"com.brainhatchery.cucusel.ui.hooks"},
         plugin = {"pretty", "summary", "io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm"})
 public class CucuselRunner extends AbstractTestNGCucumberTests {
 

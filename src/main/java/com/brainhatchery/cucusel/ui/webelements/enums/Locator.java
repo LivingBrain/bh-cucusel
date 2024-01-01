@@ -1,4 +1,4 @@
-package com.brainhatchery.cucusel.utils.webelements.enums;
+package com.brainhatchery.cucusel.ui.webelements.enums;
 
 public enum Locator {
     ID,

@@ -1,6 +1,6 @@
 package com.brainhatchery.cucusel.utils.listeners;
 
-import com.brainhatchery.cucusel.utils.configuration.CucuselConfig;
+import com.brainhatchery.cucusel.configuration.CucuselConfig;
 import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,6 +1,6 @@
-package com.brainhatchery.cucusel.utils.webelements;
+package com.brainhatchery.cucusel.ui.webelements;
 
-import com.brainhatchery.cucusel.utils.webelements.enums.Locator;
+import com.brainhatchery.cucusel.ui.webelements.enums.Locator;
 import org.openqa.selenium.By;
 
 public class LocatorExtension {

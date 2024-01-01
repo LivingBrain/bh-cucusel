@@ -1,8 +1,8 @@
-package com.brainhatchery.cucusel.utils.hooks;
+package com.brainhatchery.cucusel.ui.hooks;
 
-import com.brainhatchery.cucusel.utils.configuration.CucuselConfig;
-import com.brainhatchery.cucusel.utils.driver.BrowserOptionsContext;
-import com.brainhatchery.cucusel.utils.driver.Driver;
+import com.brainhatchery.cucusel.configuration.CucuselConfig;
+import com.brainhatchery.cucusel.ui.driver.BrowserOptionsContext;
+import com.brainhatchery.cucusel.ui.driver.Driver;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;

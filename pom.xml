@@ -22,6 +22,7 @@
         <log4j.version>2.22.0</log4j.version>
         <assertj-core.version>3.24.2</assertj-core.version>
         <awaitility.version>4.2.0</awaitility.version>
+        <jackson.version>2.16.1</jackson.version>
     </properties>
 
     <build>
@@ -123,6 +124,12 @@
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
             <version>${awaitility.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
     </dependencies>
 </project>
