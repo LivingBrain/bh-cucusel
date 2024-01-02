@@ -1,108 +1,128 @@
 package com.brainhatchery.cucusel.api;
 
+import com.brainhatchery.cucusel.api.utils.JsonHandler;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.FilterableRequestSpecification;
 import io.restassured.specification.RequestSpecification;
+import lombok.Getter;
 import org.testng.Assert;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
-public abstract class BaseEndpoint {
-
+@SuppressWarnings("unchecked")
+public abstract class CucuselBaseEndpoint<T extends CucuselBaseEndpoint<T>> {
+    @Getter
     private RequestSpecification requestSpecification;
     private RestAssuredConfig config;
     private Response response;
-    private String pathToRequestBodyJson;
-    private String baseUri;
-    private String basePath;
 
-    public BaseEndpoint(String baseUri, String basePath, String pathToRequestBodyJson, RestAssuredConfig config) {
-        this.baseUri = baseUri;
-        this.basePath = basePath;
-        this.pathToRequestBodyJson = pathToRequestBodyJson;
-        this.config = config;
+    public CucuselBaseEndpoint(String baseUri, String basePath, RestAssuredConfig config) {
         createRequestSpecification();
         configureUri(baseUri, basePath);
-    }
-
-    public BaseEndpoint(String baseUri, String basePath, String pathToRequestBodyJson) {
-        this(baseUri, basePath, pathToRequestBodyJson, null);
-    }
-
-    public BaseEndpoint(String baseUri, String basePath, RestAssuredConfig config) {
-        this(baseUri, basePath, null, config);
-    }
-
-    public BaseEndpoint(String baseUri, String basePath) {
-        this(baseUri, basePath, null, null);
-    }
-
-    public BaseEndpoint refreshRequestSpecification() {
-        createRequestSpecification();
-        return this;
-    }
-
-    public RequestSpecification getConfiguredRequestSpecification() {
         if (config != null) {
-            requestSpecification.config(config);
-        } else {
-            throw new NullPointerException("Rest Assured config was not provided. Provide config with BaseEndpoint constructor or with setConfig() method.");
+            this.config = config;
+            setConfig(config);
         }
-        return requestSpecification;
     }
 
-    public BaseEndpoint setConfig(RestAssuredConfig config) {
+    public CucuselBaseEndpoint(String baseUri, String basePath) {
+        this(baseUri, basePath, null);
+    }
+
+    public T clearRequestSpecification() {
+        createRequestSpecification();
+        return (T) this;
+    }
+
+    public T setConfig(RestAssuredConfig config) {
+        requestSpecification
+                .config(config);
         this.config = config;
-        return this;
+        return (T) this;
     }
 
-    public RequestSpecification getRequestSpecification() {
-        return requestSpecification;
+    public T setRequestBody(Class<T> valueType, String jsonPathWithName) {
+        requestSpecification
+                .body(new JsonHandler().loadFileAsInputStream(valueType, jsonPathWithName));
+        return (T) this;
     }
 
-    public BaseEndpoint setPathToRequestBodyJson(String pathToRequestBodyJson) {
-        this.pathToRequestBodyJson = pathToRequestBodyJson;
-        return this;
+    public T setRequestBody(File file) {
+        requestSpecification
+                .body(file);
+        return (T) this;
     }
 
-    public BaseEndpoint setBasicAuth(String userName, String userPassword) {
+    public T setRequestBody(InputStream body) {
+        requestSpecification
+                .body(body);
+        return (T) this;
+    }
+
+    public T refreshRequestSpecification() {
+        createRequestSpecification();
+        if (config != null) {
+            requestSpecification
+                    .config(config);
+        }
+        return (T) this;
+    }
+
+    public T setBasicAuth(String userName, String userPassword) {
         requestSpecification
                 .auth()
                 .preemptive()
                 .basic(userName, userPassword);
-        return this;
+        return (T) this;
     }
 
-    public BaseEndpoint sendGetRequest() {
+    public T sendGetRequest() {
         response = requestSpecification
                 .request(Method.GET);
-        return this;
+        refreshRequestSpecification();
+        return (T) this;
     }
 
-    public BaseEndpoint setRequestBody(Object requestBody) {
-        requestSpecification
-                .body(requestBody);
-        return this;
-    }
-
-    public BaseEndpoint sendPostRequest() {
+    public T sendPostRequest() {
         response = requestSpecification
                 .request(Method.POST);
-        return this;
+        refreshRequestSpecification();
+        return (T) this;
+    }
+
+    public T sendPutRequest() {
+        response = requestSpecification
+                .request(Method.PUT);
+        refreshRequestSpecification();
+        return (T) this;
+    }
+
+    public T sendDeleteRequest() {
+        response = requestSpecification
+                .request(Method.DELETE);
+        refreshRequestSpecification();
+        return (T) this;
+    }
+
+    public T setRequestBody(Object requestBody) {
+        requestSpecification
+                .body(requestBody);
+        return (T) this;
     }
 
     private void assertStatusCode(int expectedStatusCode) {
         Assert.assertEquals(response.getStatusCode(), expectedStatusCode, "Expected status code did not matched actual status code. Response was not deserialized.");
     }
 
-    protected <T>T getResponseAs(Class<T> clazz, int expectedStatusCode) {
+    protected T getResponseAs(Class<T> clazz, int expectedStatusCode) {
         if (response != null) {
             assertStatusCode(expectedStatusCode);
             return response.as(clazz);
@@ -112,7 +132,7 @@ public abstract class BaseEndpoint {
     }
 
 
-    protected <T>T getResponseAs(Class<T> clazz) {
+    protected T getResponseAs(Class<T> clazz) {
         if (response != null) {
             return response.as(clazz);
         } else {
@@ -120,7 +140,7 @@ public abstract class BaseEndpoint {
         }
     }
 
-    protected <T> List<T> getResponseAsListOf(Class<T> clazz, int expectedStatusCode) {
+    protected List<T> getResponseAsListOf(Class<T> clazz, int expectedStatusCode) {
         if (response != null) {
             assertStatusCode(expectedStatusCode);
             return response.as(TypeFactory.defaultInstance().constructCollectionLikeType(ArrayList.class, clazz));
@@ -139,18 +159,21 @@ public abstract class BaseEndpoint {
                 .basePath(basePath);
     }
 
-    protected void detachHeader(String key) {
+    protected T detachHeader(String key) {
         FilterableRequestSpecification requestSpecification = (FilterableRequestSpecification) this.requestSpecification;
         requestSpecification.removeHeader(key);
+        return (T) this;
     }
 
-    protected void removeCookie(String cookie) {
+    protected T removeCookie(String cookie) {
         FilterableRequestSpecification requestSpecification = (FilterableRequestSpecification) this.requestSpecification;
         requestSpecification.removeCookie(cookie);
+        return (T) this;
     }
 
-    protected void clearReqQueryParams() {
+    protected T clearReqQueryParams() {
         FilterableRequestSpecification requestSpecification = (FilterableRequestSpecification) this.requestSpecification;
         new ArrayList<>(requestSpecification.getQueryParams().keySet()).forEach(requestSpecification::removeQueryParam);
+        return (T) this;
     }
 }
