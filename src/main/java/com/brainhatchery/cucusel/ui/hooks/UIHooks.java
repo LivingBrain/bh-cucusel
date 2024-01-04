@@ -21,7 +21,7 @@ public class UIHooks {
         BrowserOptionsContext.setInstance(CucuselConfig.getBrowserType());
     }
 
-    @Before("@UI")
+    @Before(value = "@UI", order = 10001)
     public void setupBrowser() {
         Driver.setInstance(
                 CucuselConfig.getGridUrl(),

@@ -25,7 +25,6 @@ public class DriverFactory {
                                          BrowserTypes browserType,
                                          String[] driverArguments) {
         boolean isRemote = gridUrl != null;
-//        System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
 
         switch (browserType) {
             case CHROME:
